@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SHA-256 Hexadecimal Trippy Animation</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/js-sha256/0.9.0/sha256.min.js"></script>
+  <style>
+    body {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      background: repeating-linear-gradient(45deg, #2c3e50, #2c3e50 10px, #34495e 10px, #34495e 20px);
+      font-family: 'Arial', sans-serif;
+      color: #fff;
+      overflow: hidden;
+    }
+    body::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(45deg, rgba(255, 255, 255, 0.1), rgba(0, 0, 0, 0.1));
+      animation: moveBackground 10s linear infinite;
+      z-index: -1;
+    }
+    @keyframes moveBackground {
+      0% { background-position: 0 0; }
+      100% { background-position: 100% 100%; }
+    }
+    canvas {
+      border: 2px solid #fff;
+    }
+    .controls {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 90%;
+      max-width: 800px;
+      padding: 20px;
+      background: rgba(44, 62, 80, 0.9);
+      border-radius: 10px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+      position: static;
+      z-index: 1;
+    }
+    input {
+      width: 100%;
+      padding: 10px;
+      font-size: 16px;
+      border-radius: 5px;
+      border: 2px solid #fff;
+      margin-bottom: 10px;
+      text-align: center;
+      box-sizing: border-box;
+    }
+    .hash-container {
+      display: flex;
+      align-items: center;
+      width: 100%;
+      position: relative;
+    }
+    .hash-display {
+      flex: 1;
+      padding: 10px;
+      font-size: 18px;
+      color: #FFD700;
+      background: rgba(0, 0, 0, 0.7);
+      border-radius: 5px;
+      border: 2px solid #fff;
+      text-align: center;
+      word-wrap: break-word;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      box-sizing: border-box;
+    }
+    .copy-button {
+      margin-left: 10px;
+      padding: 10px;
+      font-size: 16px;
+      border: 2px solid #fff;
+      border-radius: 5px;
+      background: #3498db;
+      color: #fff;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    .copy-button:hover {
+      background: #2980b9;
+    }
+    .math-symbol {
+      margin-top: 10px;
+      font-size: 24px;
+      color: #FFD700;
+      background: rgba(0, 0, 0, 0.7);
+      padding: 10px;
+      border-radius: 5px;
+      border: 2px solid #fff;
+      text-align: center;
+      box-sizing: border-box;
+      width: 100%;
+    }
+    .copy-message {
+      position: absolute;
+      top: -30px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #3498db;
+      color: #fff;
+      padding: 5px 10px;
+      border-radius: 5px;
+      border: 2px solid #fff;
+      display: none;
+    }
+    .bitcoin-symbol {
+      position: absolute;
+      font-size: 64px;
+      color: #FFD700;
+      pointer-events: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="controls">
+    <input type="text" id="inputText" placeholder="Enter text to hash">
+    <div class="hash-container">
+      <div id="hashDisplay" class="hash-display"></div>
+      <button id="copyButton" class="copy-button">Copy</button>
+      <div id="copyMessage" class="copy-message">Copied!</div>
+    </div>
+    <div class="math-symbol" title="2^256 represents the total number of unique SHA-256 hashes">2<sup>256</sup> = 16<sup>64</sup> <br> SHA-256</div>
+  </div>
+  <div id="canvasContainer" style="position: relative;">
+    <div class="bitcoin-symbol">₿</div>
+  </div>
+  <script>
+    const hexCharacters = '0123456789ABCDEF';
+    const maxChars = 20; // Number of characters to display at once
+    let sha256Hash = '';
+    let inputText;
+
+    function setup() {
+      const canvasContainer = document.getElementById('canvasContainer');
+      let canvas = createCanvas(windowWidth * 0.8, windowHeight * 0.5);
+      canvas.parent(canvasContainer);
+      textAlign(CENTER, CENTER);
+      textSize(64);
+      frameRate(10); // Control the frame rate
+
+      inputText = select('#inputText');
+      inputText.input(updateHash);
+
+      const copyButton = select('#copyButton');
+      copyButton.mousePressed(copyToClipboard);
+    }
+
+    function updateHash() {
+      sha256Hash = sha256(inputText.value());
+      document.getElementById('hashDisplay').innerText = sha256Hash;
+    }
+
+    function copyToClipboard() {
+      const hashDisplay = document.getElementById('hashDisplay');
+      const copyMessage = document.getElementById('copyMessage');
+      navigator.clipboard.writeText(hashDisplay.innerText).then(() => {
+        copyMessage.style.display = 'block';
+        setTimeout(() => {
+          copyMessage.style.display = 'none';
+        }, 1000);
+      });
+    }
+
+    function draw() {
+      background(0, 25); // Clear the background with some transparency for a trailing effect
+      drawHexCharacters();
+      drawBitcoinSymbol();
+    }
+
+    function drawHexCharacters() {
+      for (let i = 0; i < maxChars; i++) {
+        let x = random(width);
+        let y = random(height);
+        let randomChar = hexCharacters.charAt(floor(random(hexCharacters.length)));
+        fill(random(255), random(255), random(255));
+        text(randomChar, x, y);
+      }
+    }
+
+    function drawBitcoinSymbol() {
+      const symbol = document.querySelector('.bitcoin-symbol');
+      symbol.style.top = `${(height / 2) - 32}px`;
+      symbol.style.left = `${(width / 2) - 32}px`;
+    }
+  </script>
+</body>
+</html>
