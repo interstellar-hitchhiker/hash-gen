@@ -16,7 +16,7 @@ Installation
 Clone the repository:
 bash
 Copy code
-git clone https://github.com/your-github-username/sha256-hexadecimal-trippy-animation.git
+git clone [https://github.com/your-github-username/sha256-hexadecimal-trippy-animation.git](https://interstellar-hitchhiker.github.io/hash-gen/)
 Navigate to the project directory:
 bash
 Copy code
