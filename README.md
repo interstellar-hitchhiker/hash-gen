@@ -1,37 +1,100 @@
 # hash-gen
- A web-based visualization that animates hexadecimal characters derived from the SHA-256 hash of user-inputted text.
-SHA-256 Hexadecimal Trippy Animation
-This project is a mesmerizing web-based visualization that animates hexadecimal characters derived from the SHA-256 hash of user-inputted text. It leverages the power of p5.js for dynamic graphics and js-sha256 for computing SHA-256 hashes. Users can enter text to generate a corresponding SHA-256 hash, which is then displayed and animated in a trippy, visually captivating manner.
 
-Features
-SHA-256 Hash Generation: Enter any text to generate its SHA-256 hash.
-Interactive Animation: Watch the hexadecimal characters of the hash dance around the screen.
-Copy to Clipboard: Easily copy the generated hash to your clipboard with a single click.
-Responsive Design: The animation adjusts to different screen sizes, ensuring a great experience on any device.
-Bitcoin Symbol: A Bitcoin symbol is dynamically positioned in the center of the animation.
-Demo
-Check out the live demo here.
+**Hash Fingerprint Lab — SHA-256 digital fingerprint visualiser**
 
-Installation
-Clone the repository:
-bash
-Copy code
-git clone [https://github.com/your-github-username/sha256-hexadecimal-trippy-animation.git](https://interstellar-hitchhiker.github.io/hash-gen/)
-Navigate to the project directory:
-bash
-Copy code
-cd sha256-hexadecimal-trippy-animation
-Open the index.html file in your preferred web browser.
-Usage
-Enter any text in the input field to generate its SHA-256 hash.
-The generated hash will be displayed below the input field.
-Click the "Copy" button to copy the hash to your clipboard.
-Watch the animated hexadecimal characters on the canvas.
-Technologies Used
-HTML: For structuring the web page.
-CSS: For styling the web page, including animations and responsive design.
-JavaScript: For logic and interactivity, including hash generation and canvas drawing.
-p5.js: For creating the trippy animation of hexadecimal characters.
-js-sha256: For generating SHA-256 hashes.
-Contributing
-Contributions are welcome! Feel free to open an issue or submit a pull request.
+Live demo: https://interstellar-hitchhiker.github.io/hash-gen/
+
+## Project history
+
+### Version 1: SHA-256 Hexadecimal Trippy Animation
+
+The first version of `hash-gen` was a simple visual experiment. A user could type text into the page, generate a SHA-256 hash, copy the result, and watch hexadecimal characters dance around the screen in a colourful p5.js animation. It included a central Bitcoin symbol and treated the hash mainly as a visual object: mysterious, mathematical, and slightly psychedelic.
+
+Version 1 worked as a fun browser toy, but it did not fully explain why hashing matters. It generated a hash, but it did not clearly show what a hash is for.
+
+## Version 2.4: Hash Fingerprint Lab
+
+Version 2.4 rebuilds the project as a clearer, more useful single-file web app about **digital fingerprints**.
+
+Instead of only showing one animated hash, the app now lets users compare an **original text** with a **changed text**. It calculates the SHA-256 fingerprint for both versions and shows how even a tiny edit can produce a radically different result. This is known as the **avalanche effect**.
+
+The goal is simple:
+
+> Show how SHA-256 can detect change.
+
+A hash is not encryption. It does not hide a message so it can be decrypted later. It creates a fixed-length fingerprint of the input. If the input changes, the fingerprint changes.
+
+## What the app demonstrates
+
+* **Digital fingerprints**: every input produces a 64-character SHA-256 hash.
+* **Change detection**: identical text produces the same fingerprint; edited text produces a different one.
+* **Avalanche effect**: one small change can flip many bits in the final 256-bit hash.
+* **Tamper evidence**: the app shows why hashes are useful for checking whether something has been altered.
+* **Static web app design**: the whole project runs as a single HTML file, suitable for GitHub Pages.
+
+## Interactive features
+
+* Type or edit original text.
+* Compare it with a changed/test version.
+* Generate SHA-256 fingerprints.
+* View a 256-bit visual map of the hash.
+* Highlight how many bits changed.
+* Try built-in demos:
+
+  * one-character change
+  * identical text
+  * fake invoice tamper
+* Copy the original or changed fingerprint.
+* Try the optional “hash lottery” bonus section, which searches for a hash beginning with a chosen number of zeros.
+
+## Why this exists
+
+`hash-gen` is a small educational browser app for understanding hashing through interaction rather than explanation alone.
+
+It can help users understand ideas behind:
+
+* file integrity checks
+* tamper detection
+* digital fingerprints
+* blockchain proof-of-work concepts
+* why tiny changes matter in cryptographic systems
+
+It is not a security product, a password manager, a mining tool, or an encryption app. It is a visual learning tool.
+
+## How to use
+
+1. Open the live demo.
+2. Read the short explanation at the top.
+3. Click **Demo: one-character change**.
+4. Watch how the SHA-256 fingerprint changes.
+5. Try your own text.
+6. Compare the original and changed versions.
+
+## Technologies used
+
+* HTML
+* CSS
+* JavaScript
+* SHA-256 hashing in the browser
+* Single-file static web app structure
+
+## Running locally
+
+Download or clone the repository, then open `index.html` in a browser.
+
+```bash
+git clone https://github.com/interstellar-hitchhiker/hash-gen.git
+cd hash-gen
+```
+
+Then open:
+
+```bash
+index.html
+```
+
+## Design direction
+
+Version 2.4 moves away from a generic “trippy animation” style and toward a clearer forensic-lab interface. The design is meant to match the concept: fingerprints, change detection, bit maps, and tamper evidence.
+
+The project remains playful and visual, but the interface now has a stronger purpose: helping people see what a cryptographic hash actually does.
