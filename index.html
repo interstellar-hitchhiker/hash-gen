@@ -649,9 +649,6 @@
           <button id="copyBBtn">Copy changed fingerprint</button>
         </div>
 
-        <div class="note">
-          Static-page friendly: the hash is calculated by JavaScript in the page, so this works cleanly on GitHub Pages with no server, account, or database setup.
-        </div>
       </section>
 
       <section class="bit-stage">
@@ -697,13 +694,8 @@
         </section>
 
         <section class="explain-card">
-          <h3>Real-world uses</h3>
-          <ul>
-            <li><strong>File check:</strong> “Is this download exactly the file the website promised?”</li>
-            <li><strong>Tamper evidence:</strong> “Did someone silently edit this record?”</li>
-            <li><strong>Blockchains:</strong> “Can a computer find a hash with a rare starting pattern?”</li>
-            <li><strong>Passwords:</strong> real systems use salted, deliberately slow password hashing; plain SHA-256 alone is not enough.</li>
-          </ul>
+          <h3>Important note</h3>
+          <p>This is an educational visualiser, not a professional security tool. It is designed to make hashing understandable by showing how digital fingerprints change when the input changes.</p>
         </section>
 
         <section class="explain-card">
@@ -736,9 +728,6 @@
         <section class="explain-card">
           <h3>Not encryption</h3>
           <p>Encryption is for hiding a message and later unlocking it. Hashing is different: it makes a fingerprint you can compare. You do not decrypt a SHA-256 hash.</p>
-          <div class="note">
-            Design theme: forensic lab, black box, fingerprint strip, bit avalanche. The interface is shaped by the concept rather than copied from another app.
-          </div>
         </section>
       </aside>
     </main>
