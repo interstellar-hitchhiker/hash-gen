@@ -2,8 +2,6 @@
 
 **Hash Fingerprint Lab — SHA-256 digital fingerprint visualiser**
 
-Live demo: https://interstellar-hitchhiker.github.io/hash-gen/
-
 ## Project history
 
 ### Version 1: SHA-256 Hexadecimal Trippy Animation
